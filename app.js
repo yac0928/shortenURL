@@ -19,7 +19,18 @@ app.get('/shorten', (req, res) => {
   if (inputURL) {
     let shortURL = shorten(inputURL, urls)
     res.render('short', {shortURL})
+  } else {
+    res.redirect('/')
   }
+})
+
+app.get('/:id', (req, res) => {
+  let id = req.params.id
+  let url = urls.find((data) => data.id === id)
+  if (!url) {
+    res.redirect('/')
+  }
+  res.redirect(url.origin)
 })
 
 app.listen(port, () => {

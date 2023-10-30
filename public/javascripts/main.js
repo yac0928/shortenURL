@@ -2,7 +2,7 @@
 const urlField = document.getElementById("urlField")
 const copyBtn = document.getElementById("copyBtn")
 copyBtn.addEventListener("click", function() {
-  urlField.ariaSelected()
+  urlField.select()
   navigator.clipboard.writeText(urlField.value)
     .then(function() {
       alert("Copied: " + urlField.value)
