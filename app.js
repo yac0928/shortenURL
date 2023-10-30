@@ -15,9 +15,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/shorten', (req, res) => {
-  const inputurl = req.query.url
-  if (inputurl) {
-    res.render('short', {})
+  const inputURL = req.query.url
+  if (inputURL) {
+    let shortURL = shorten(inputURL, urls)
+    res.render('short', {shortURL})
   }
 })
 
@@ -30,7 +31,7 @@ function randomID(num) {
   const char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let id = ''
   for (let i = 0; i < num; i++) {
-    id += Math.floor(Math.random() * char.length)
+    id += char[Math.floor(Math.random() * char.length)]
   }
   //判斷是否重複
   if (urls.some((url) => url.id === id)) {
@@ -51,22 +52,7 @@ function shorten(input, datas) {
     })
     const jsonData = JSON.stringify(datas, null, 2);
     // 寫入 JSON 檔案
-    fs.writeFileSync('./public/jsons/url.json', jsonData, 'utf-8');
+    fs.writeFileSync('./public/jsons/urls.json', jsonData, 'utf-8');
   }
   return `http://localhost:3000/${id}`
 }
-
-
-//複製連結
-const urlField = document.getElementById("urlField")
-const copyBtn = document.getElementById("copyBtn")
-copyBtn.addEventListener("click", function() {
-  urlField.ariaSelected()
-  navigator.clipboard.writeText(urlField.value)
-    .then(function() {
-      alert("Copied: " + urlField.value)
-    })
-    .catch(function(err) {
-      console.log("Failed: " + err)
-    })
-})
