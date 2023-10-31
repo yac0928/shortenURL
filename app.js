@@ -34,7 +34,7 @@ app.get('/:id', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Express server is running on http://localhost:3000`)
 })
 
 //隨機ID
